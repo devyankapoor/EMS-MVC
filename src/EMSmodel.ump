@@ -1,0 +1,106 @@
+namespace ca.mcgill.assignment.model;
+
+use EMSPersistence.ump;
+class EMS
+{
+  singleton;
+     0..1  -> *  Election;
+     0..1 -> *  ElectionBody;
+     0..1 -> *  Person;
+     0..1 -> *  PollingStation;
+  
+}
+
+class Election
+{
+ lazy typeOfElection;
+ lazy electionDate;
+  before setTypeOfElection {
+ 	if (aTypeOfElection == null || aTypeOfElection.trim().length() == 0) {
+ 	throw new RuntimeException("Type of Election cannot be empty.");  }
+ }
+ before setElectionDate {
+ 	if (aElectionDate == null || aElectionDate.trim().length() == 0) {
+ 	throw new RuntimeException("ElectionDate cannot be empty."); }
+ }
+}
+
+
+class ScheduledElection{isA Election;}
+class ByElection{isA Election;}
+
+
+
+class ElectionBody
+{
+ lazy nameOfBody;
+  before setNameOfBody {
+ 	if (aNameOfBody == null || aNameOfBody.trim().length() == 0) {
+ 	throw new RuntimeException("Election Body cannot be empty.");  }
+ }
+ 1 <@>- * Position; 
+}
+ 
+ class Position
+{
+ lazy nameOfPosition;
+  before setNameOfPosition {
+ 	if (aNameOfPosition == null || aNameOfPosition.trim().length() == 0) {
+ 	throw new RuntimeException("Name of Position cannot be empty.");}
+ }
+ 
+}
+ 
+ 
+ class Person
+ {
+     lazy name;
+     lazy address;
+ }
+ 
+ class Candidate
+ {
+   Boolean    isIncumbent;
+   Boolean   isReelected;
+   0..1 -- 1  Person;
+   * -- 1..* Position;
+  }
+
+class Party
+{
+  lazy nameOfParty;
+0..1 -- * Candidate;
+  
+}
+  
+  class Voter
+  {
+    Boolean isEligible;
+  0..1 -- 1 Person;
+  * -- 1 Area;
+  }
+  
+  class Area
+  {
+  * -- * Position;
+
+  }
+  
+  class Poll
+  {
+    autounique pollNumber;
+
+    1 -- * Voter;
+  }
+  
+  associationClass Votes
+  {
+    * Candidate;
+	* Poll;
+  }
+  
+  class PollingStation
+  {
+   lazy address;
+   1 <@>- * Poll;
+  }

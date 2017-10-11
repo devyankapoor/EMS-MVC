@@ -1,0 +1,48 @@
+
+external interface Serializable {}
+
+class EMS 
+{
+  depend java.io.Serializable;
+  isA Serializable;
+ }
+
+class Election
+ {
+  depend java.io.Serializable;
+  isA Serializable;
+
+  }
+ 
+class ElectionBody {
+  depend java.io.Serializable;
+  isA Serializable;
+
+  
+  }
+  
+
+
+class ScheduledElection {
+  depend java.io.Serializable;
+  isA Serializable;
+  
+}
+
+class ByELection {
+  depend java.io.Serializable;
+  isA Serializable;
+  
+}
+
+class Position {
+  depend java.io.Serializable;
+  isA Serializable;
+  
+  }
+  
+  class Person {
+  depend java.io.Serializable;
+  isA Serializable;
+ 
+}
